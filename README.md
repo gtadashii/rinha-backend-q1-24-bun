@@ -1,15 +1,7 @@
-# Elysia with Bun runtime
+# Rinha back-end 2024 q1 Bun
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
-```bash
-bun create elysia ./elysia-example
-```
+Minha humilde entrada na rinha back-end, novamente utilizando Bun + Elysia.
 
-## Development
-To start the development server run:
-```bash
-bun run dev
-```
+Vou atualizando o README conforme atualizar o projeto.
 
-Open http://localhost:3000/ with your browser to see the result.
+Meu projeto da última rinha: https://github.com/gtadashii/rinha-backend-bun-fancy
