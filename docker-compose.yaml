@@ -20,6 +20,7 @@ services:
       - app_network
 
   api1: &api
+    image: gtadashii/rinha-back-bun-q1-24:latest
     hostname: api1
     build: .
     depends_on:
