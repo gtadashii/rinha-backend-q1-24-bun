@@ -53,7 +53,18 @@ export const getTransactionsByClientId = async (id: number): Promise<AccountExtr
 
 export const makeTransaction = async (request: MakeTransactionDto): Promise<TransactionConcludedResult> => {
   const { id, amount, type, description } = request;
-  const account = await getClientById(id);
+
+  if (!Number(id)) {
+    throw new InvalidPayloadException('id must be a number');
+  }
+
+  if (!Number(amount)) {
+    throw new InvalidPayloadException('amount must be a number');
+  }
+
+  if (!type || !description) {
+    throw new InvalidPayloadException('missing required fields: "valor", "tipo" and "descricao"');
+  }
 
   if (!['c', 'd'].includes(type)) {
     throw new InvalidPayloadException('type must be one of: "c" or "d"');
@@ -67,14 +78,16 @@ export const makeTransaction = async (request: MakeTransactionDto): Promise<Tran
     throw new InvalidPayloadException('amount must be an integer');
   }
 
-  const treatedAmount = type === 'd' ? -amount : amount;
+  const treatedAmount = type === 'd' ? amount * -1 : amount;
+
+  const account = await getClientById(id);
 
   const updatedAccountData = {
     limite: account.limite,
     saldo: account.total + treatedAmount
   };
 
-  if (updatedAccountData.saldo < -updatedAccountData.limite) {
+  if (updatedAccountData.saldo < updatedAccountData.limite * -1) {
     throw new InconsistentTransactionException();
   }
 
